@@ -22,7 +22,9 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(
+    "mongodb+srv://akhil:akhil@cluster0.dgi9ds1.mongodb.net/chatter-mate?retryWrites=true&w=majority"
+  )
   .then((res) => console.log("connected to mdb"))
   .catch((err) => console.log("error connecting to mdb"));
 const server = app.listen(8080, () => {
@@ -38,7 +40,7 @@ io.on("connection", (socket) => {
   console.log("connected to socket.io");
   socket.on("setup", (user) => {
     socket.join(user._id);
-    console.log("user connected")
+    console.log("user connected");
     socket.emit("connected");
   });
   socket.on("join chat", (room) => {

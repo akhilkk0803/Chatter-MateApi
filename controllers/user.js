@@ -3,7 +3,7 @@ const asynchandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 function generateToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, "FJDKSLJFKSJFK");
 }
 exports.login = asynchandler(async (req, res, next) => {
   const { email, password } = req.body;
