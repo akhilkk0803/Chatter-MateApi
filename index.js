@@ -30,7 +30,7 @@ const server = app.listen(8080, () => {
 });
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://chatter-mate-763ed.web.app/",
   },
 });
 
