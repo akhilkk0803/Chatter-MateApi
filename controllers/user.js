@@ -29,6 +29,7 @@ exports.signup = asynchandler(async (req, res, next) => {
     throw new Error("Enter all details");
   }
   const exsits = await User.findOne({ email: email });
+
   if (exsits) {
     const error = new Error();
     error.status = 400;
@@ -63,5 +64,21 @@ exports.getuser = async (req, res, next) => {
     res.json(user);
   } else {
     res.json(await User.findById(req.userId, { name: 1, pic: 1, email: 1 }));
+  }
+};
+exports.edit = async (req, res, next) => {
+  const { pic, email, name, id } = req.body;
+  try {
+    let user = await User.findOne({ email: email, _id: { $ne: id } });
+    if (user) {
+      const error = new Error("user exsist with this email");
+      error.statusCode = 400;
+      throw error;
+    }
+    user = await User.findByIdAndUpdate(id, { email, pic, name });
+    user = await User.findById(id);
+    res.json(user);
+  } catch (error) {
+    next(error);
   }
 };
