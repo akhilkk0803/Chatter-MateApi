@@ -50,8 +50,10 @@ exports.signup = asynchandler(async (req, res, next) => {
   }
 });
 exports.getuser = async (req, res, next) => {
-  const { search } = req.query;
-  if (search) {
+  const { search, all } = req.query;
+  if (all) {
+    res.json(await User.find());
+  } else if (search) {
     const user = await User.find({
       $or: [
         { name: { $regex: search, $options: "i" } },
