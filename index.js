@@ -21,14 +21,15 @@ app.use((error, req, res, next) => {
   const message = error.message;
   res.status(status).json({ message });
 });
-mongoose
+
+const server = app.listen(8080, () => {
+  console.log("Server running at port 8080...");
+  mongoose
   .connect(
     "mongodb+srv://akhil:akhil@cluster0.dgi9ds1.mongodb.net/chatter-mate?retryWrites=true&w=majority"
   )
   .then((res) => console.log("connected to mdb"))
   .catch((err) => console.log("error connecting to mdb"));
-const server = app.listen(8080, () => {
-  console.log("Server running at port 8080...");
 });
 const io = new Server(server, {
   cors: {
